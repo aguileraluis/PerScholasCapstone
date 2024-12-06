@@ -1,6 +1,6 @@
-# React + Vite
+# Effective Task Management System 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a MERN stack application that allows users to create accounts, assign tasks, create tasks, edit task, delete tasks and invite users to the platform. 
 
 Currently, two official plugins are available:
 
