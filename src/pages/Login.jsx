@@ -6,7 +6,8 @@ import Button from "../components/Button";
 import { useSelector } from "react-redux";
 
 const Login = () => {
-  const user = ""; 
+  const {user} = useSelector((state) => state.auth); 
+  
   const {
     register,
     handleSubmit,
@@ -18,6 +19,8 @@ const Login = () => {
   const submitHandler = async (data) => {
     console.log("submit");
   };
+
+  console.log(user); 
 
   useEffect(() => {
     user && navigate("/dashboard");
