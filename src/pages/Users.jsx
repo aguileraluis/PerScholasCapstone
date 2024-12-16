@@ -21,13 +21,13 @@ const Users = () => {
 
   const userActionHandler = async () => {
     try {
-      const result = await userAction({
+      await userAction({
         isActive: !selected?.isActive,
         id: selected?._id
       }); 
 
       refetch(); 
-      toast.success(result.data.message); 
+      toast.success("Successfully changed active status"); 
       setSelected(null); 
       setTimeout(() => {
         setOpenAction(false); 

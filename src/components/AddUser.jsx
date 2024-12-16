@@ -32,7 +32,7 @@ const AddUser = ({ open, setOpen, userData }) => {
 
       } else {
         await addNewUser({...data, password: data.email}).unwrap(); 
-        toast.success(result?.message); 
+        toast.success("New user added successfully"); 
         
       }
 
