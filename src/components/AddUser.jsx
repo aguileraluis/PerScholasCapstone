@@ -1,49 +1,55 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Dialog } from "@headlessui/react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import ModalWrapper from './ModalWrapper';
-import { Dialog } from '@headlessui/react';
-import Textbox from './Textbox';
-import Button from './Button';
-import Loading from "./Loader"; 
-import { useRegisterMutation } from '../redux/slices/api/authApiSlice';
-import { toast } from 'sonner';
-import { useUpdateUserMutation } from '../redux/slices/api/userApiSlice';
+import { toast } from "sonner";
+import { useRegisterMutation } from "../redux/slices/api/authApiSlice";
+import { useUpdateUserMutation } from "../redux/slices/api/userApiSlice";
+import { setCredentials } from "../redux/slices/authSlice";
+import Button from "./Button";
+import Loading from "./Loader";
+import ModalWrapper from "./ModalWrapper";
+import Textbox from "./Textbox";
 
 const AddUser = ({ open, setOpen, userData }) => {
-  let defaultValues = userData ?? {}; 
-  const { user } = useSelector((state) => state.auth); 
+  let defaultValues = userData ?? {};
+  const { user } = useSelector((state) => state.auth);
 
   const {
-    register, 
-    handleSubmit, 
-    formState: { errors }
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm({ defaultValues });
-  
+
   const dispatch = useDispatch();
-  const [addNewUser, { isLoading }] = useRegisterMutation(); 
-  const [updateUser, { isLoading: isUpdating}] = useUpdateUserMutation(); 
+
+  const [addNewUser, { isLoading }] = useRegisterMutation();
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
 
   const handleOnSubmit = async (data) => {
     try {
       if (userData) {
-        const result = await updateUser(data).unwrap()
-        toast.success(result?.message); 
-
+        const res = await updateUser(data).unwrap();
+        toast.success(res?.message);
+        if (userData?._id === user?._id) {
+          dispatch(setCredentials({ ...res?.user }));
+        }
       } else {
-        await addNewUser({...data, password: data.email}).unwrap(); 
-        toast.success("New user added successfully"); 
-        
+        const res = await addNewUser({
+          ...data,
+          password: data?.email,
+        }).unwrap();
+        toast.success("New User added successfully");
       }
 
       setTimeout(() => {
-        setOpen(false)
+        setOpen(false);
       }, 1500);
-
-    } catch (error) {
-      toast.error("Something went wrong"); 
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.data?.message || err.error);
     }
-  }; 
+  };
 
   return (
     <>
@@ -128,6 +134,5 @@ const AddUser = ({ open, setOpen, userData }) => {
     </>
   );
 };
-
 
 export default AddUser;

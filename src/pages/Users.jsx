@@ -21,22 +21,22 @@ const Users = () => {
 
   const userActionHandler = async () => {
     try {
-      await userAction({
-        isActive: !selected?.isActive,
-        id: selected?._id
-      }); 
-
+      const res = await userAction({
+        isActive: !selected?.isActive, 
+        id: selected?._id }); 
+      
       refetch(); 
-      toast.success("Successfully changed active status"); 
+
+      toast.success(res?.data?.message); 
       setSelected(null); 
       setTimeout(() => {
         setOpenAction(false); 
-      }, 500); 
-
+      }, 500);
     } catch (error) {
-      console.log(error); 
-      toast.error(error?.data?.message || error.error);
+      console.log(error);
+      toast.error(error?.data?.message || error.error); 
     }
+
   };
 
   const deleteHandler = async () => {

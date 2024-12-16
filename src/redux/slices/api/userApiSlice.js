@@ -2,7 +2,7 @@ import { apiSlice } from "../apiSlice";
 
 const USER_URL = "/user"; 
 
-export const userApiSlice = apiSlice.injectEndpoints({
+const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     updateUser: builder.mutation({
       query: (data) => ({
@@ -31,13 +31,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     userAction: builder.mutation({
       query: (data) => ({
-        url: `${USER_URL}/${data.id}}`,
-        method: "PUT", 
+        url: `${USER_URL}/${data?.id}`,
+        method: "PUT",
         body: data,
-        credentials: "include"
-      }), 
-    }), 
-  }),
+        credentials: "include",
+      }),
+    }),
+  }), 
 }); 
 
 export const { useUpdateUserMutation, useGetTeamListQuery, useDeleteUserMutation, useUserActionMutation } = userApiSlice; 
