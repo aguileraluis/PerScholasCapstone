@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaList } from "react-icons/fa";
 import { MdGridView } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import Loading from "../components/Loader";
+import { Loader } from "../components/Loader";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { IoMdAdd } from "react-icons/io";
@@ -26,7 +26,7 @@ const TASK_TYPE = {
 
 const Tasks = () => {
   const params = useParams();
-
+  const { user } = useSelector((state) => state.auth);
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ const Tasks = () => {
 
   return loading ? (
     <div className='py-10'>
-      <Loading />
+      <Loader />
     </div>
   ) : (
     <div className='w-full'>

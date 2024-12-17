@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Loader = () => {
+export const Loader = () => {
   return (
     <div className="dots-container">
       <div className="dot"></div>
@@ -12,4 +12,3 @@ const Loader = () => {
   )
 };
 
-export default Loader;
