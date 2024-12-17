@@ -1,20 +1,18 @@
 import clsx from "clsx";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FaNewspaper } from "react-icons/fa";
 import { FaArrowsToDot } from "react-icons/fa6";
-import { LuClipboardPen } from "react-icons/lu";
+import { LuClipboardEdit } from "react-icons/lu";
 import {
   MdAdminPanelSettings,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { Chart } from "../components/Chart"; 
-import { Loader } from "../components/Loader"; 
-import UserInfo from "../components/UserInfo";
-import { useGetDashboardStatsQuery } from "../redux/slices/api/taskApiSlice";
-import { BGS, PRIORITYSTYLES, TASK_TYPE, getInitials } from "../utils";
+import { Chart, Loading, UserInfo } from "../components";
+import { useGetDasboardStatsQuery } from "../redux/slices/api/taskApiSlice";
+import { BGS, PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
 import { useSelector } from "react-redux";
 
 const Card = ({ label, count, bg, icon }) => {
@@ -33,6 +31,80 @@ const Card = ({ label, count, bg, icon }) => {
       >
         {icon}
       </div>
+    </div>
+  );
+};
+
+const Dashboard = () => {
+  const { data, isLoading, error } = useGetDasboardStatsQuery();
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
+  const totals = data?.tasks || [];
+
+  if (isLoading)
+    return (
+      <div className='py-10'>
+        <Loading />
+      </div>
+    );
+
+  const stats = [
+    {
+      _id: "1",
+      label: "TOTAL TASK",
+      total: data?.totalTasks || 0,
+      icon: <FaNewspaper />,
+      bg: "bg-[#1d4ed8]",
+    },
+    {
+      _id: "2",
+      label: "COMPLTED TASK",
+      total: totals["completed"] || 0,
+      icon: <MdAdminPanelSettings />,
+      bg: "bg-[#0f766e]",
+    },
+    {
+      _id: "3",
+      label: "TASK IN PROGRESS ",
+      total: totals["in progress"] || 0,
+      icon: <LuClipboardEdit />,
+      bg: "bg-[#f59e0b]",
+    },
+    {
+      _id: "4",
+      label: "TODOS",
+      total: totals["todo"],
+      icon: <FaArrowsToDot />,
+      bg: "bg-[#be185d]" || 0,
+    },
+  ];
+
+  return (
+    <div className='h-full py-4'>
+      <>
+        <div className='grid grid-cols-1 md:grid-cols-4 gap-5'>
+          {stats?.map(({ icon, bg, label, total }, index) => (
+            <Card key={index} icon={icon} bg={bg} label={label} count={total} />
+          ))}
+        </div>
+
+        <div className='w-full bg-white my-16 p-4 rounded shadow-sm'>
+          <h4 className='text-xl text-gray-500 font-bold mb-2'>
+            Chart by Priority
+          </h4>
+          <Chart data={data?.graphData} />
+        </div>
+        <div className='w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8'>
+          {/* RECENT AUTHORS */}
+          {data && <TaskTable tasks={data?.last10Task} />}
+          {/* RECENT USERS */}
+          {data && user?.isAdmin && <UserTable users={data?.users} />}
+        </div>
+      </>
     </div>
   );
 };
@@ -124,7 +196,7 @@ const TaskTable = ({ tasks }) => {
       </td>
       <td className='py-2'>
         <div className={"flex gap-1 items-center"}>
-          <span className={clsx("text-lg", PRIORITYSTYLES[task?.priority])}>
+          <span className={clsx("text-lg", PRIOTITYSTYELS[task?.priority])}>
             {ICONS[task?.priority]}
           </span>
           <span className='capitalize'>{task?.priority}</span>
@@ -173,80 +245,6 @@ const TaskTable = ({ tasks }) => {
         </table>
       </div>
     </>
-  );
-};
-
-const Dashboard = () => {
-  const { data, isLoading } = useGetDashboardStatsQuery();
-  // const { user } = useSelector((state) => state.auth);
-
-  // useEffect(() => {
-  //   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  // }, []);
-  // if (isLoading)
-  //   return (
-  //     <div className='py-10'>
-  //       <Loader />
-  //     </div>
-  //   );
-
-  const totals = data?.tasks || [];
-  const tasks = data?.tasks; 
-
-  const stats = [
-    {
-      _id: "1",
-      label: "TOTAL TASK",
-      total: data?.totalTasks || 0,
-      icon: <FaNewspaper />,
-      bg: "bg-[#1d4ed8]",
-    },
-    {
-      _id: "2",
-      label: "COMPLTED TASK",
-      total: totals["completed"] || 0,
-      icon: <MdAdminPanelSettings />,
-      bg: "bg-[#0f766e]",
-    },
-    {
-      _id: "3",
-      label: "TASK IN PROGRESS ",
-      total: totals["in progress"] || 0,
-      icon: <LuClipboardPen />,
-      bg: "bg-[#f59e0b]",
-    },
-    {
-      _id: "4",
-      label: "TODOS",
-      total: totals["todo"],
-      icon: <FaArrowsToDot />,
-      bg: "bg-[#be185d]" || 0,
-    },
-  ];
-
-  return (
-    <div className='h-full py-4'>
-      <>
-        <div className='grid grid-cols-1 md:grid-cols-4 gap-5'>
-          {stats?.map(({ icon, bg, label, total }, index) => (
-            <Card key={index} icon={icon} bg={bg} label={label} count={total} />
-          ))}
-        </div>
-
-        <div className='w-full bg-white my-16 p-4 rounded shadow-sm'>
-          <h4 className='text-xl text-gray-500 font-bold mb-2'>
-            Chart by Priority
-          </h4>
-          <Chart data={data?.graphData} />
-        </div>
-        <div className='w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8'>
-          {/* RECENT AUTHORS */}
-          {data && <TaskTable tasks={data?.last10Task} />}
-          {/* RECENT USERS */}
-          {data && user?.isAdmin && <UserTable users={data?.users} />}
-        </div>
-      </>
-    </div>
   );
 };
 

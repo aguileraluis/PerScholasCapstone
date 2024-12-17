@@ -6,10 +6,7 @@ import { toast } from "sonner";
 import { useRegisterMutation } from "../redux/slices/api/authApiSlice";
 import { useUpdateUserMutation } from "../redux/slices/api/userApiSlice";
 import { setCredentials } from "../redux/slices/authSlice";
-import Button from "./Button";
-import { Loader } from "./Loader";
-import ModalWrapper from "./ModalWrapper";
-import Textbox from "./Textbox";
+import { Button, Loading, ModalWrapper, Textbox } from "./";
 
 const AddUser = ({ open, setOpen, userData }) => {
   let defaultValues = userData ?? {};
@@ -111,7 +108,7 @@ const AddUser = ({ open, setOpen, userData }) => {
 
           {isLoading || isUpdating ? (
             <div className='py-5'>
-              <Loader />
+              <Loading />
             </div>
           ) : (
             <div className='py-3 mt-4 sm:flex sm:flex-row-reverse'>
