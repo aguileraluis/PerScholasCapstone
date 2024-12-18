@@ -29,7 +29,9 @@
 
 Effective Task Manager is more than just a to-do application. This fully functional full stack application built using the MERN stack (MongoDB, Express, React, Node.js) is the powerhorse you've been waiting on to manage all of your to-do's. The application allows you to log-in and view the dashboard. You are able to create tasks, add users, edit tasks, edit users, create sub tasks and receive notifications when you get assigned to a new task. 
 
-[![Product Name Screen Shot][product-screenshot]](https://i.postimg.cc/VkBXQW2b/taskmanagerperscholas.png)
+<p align="center">
+  <img src="https://i.postimg.cc/VkBXQW2b/taskmanagerperscholas.png" width="350" title="hover text">
+</p>
 
 # Features:
 
