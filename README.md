@@ -150,9 +150,6 @@ The idea for this applicatio arose from a constant lack of organization when doi
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 <!-- CONTACT -->
 ## Contact
 
