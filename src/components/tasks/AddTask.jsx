@@ -15,7 +15,7 @@ import {
   useUpdateTaskMutation,
 } from "../../redux/slices/api/taskApiSlice";
 import { dateFormatter } from "../../utils";
-import { app } from "../../utils/firebase";
+import { app } from "../../utils/firebase"; 
 import Button from "../Button";
 import Loading from "../Loading";
 import ModalWrapper from "../ModalWrapper";
@@ -90,39 +90,39 @@ const AddTask = ({ open, setOpen, task }) => {
 
   const handleOnSubmit = async (data) => {
     for (const file of assets) {
-      setUploading(true);
+      setUploading(true); 
       try {
-        await uploadFile(file);
+        await uploadFile(file); 
       } catch (error) {
-        console.error("Error uploading file:", error.message);
+        console.error("Error uploading file:", error.message); 
         return;
       } finally {
-        setUploading(false);
+        setUploading(false); 
       }
     }
 
-    try {
-      const newData = {
-        ...data,
-        assets: [...URLS, ...uploadedFileURLs],
-        team,
-        stage,
-        priority,
-      };
-      console.log(data, newData);
-      const res = task?._id
-        ? await updateTask({ ...newData, _id: task._id }).unwrap()
-        : await createTask(newData).unwrap();
+   try {
+    const newData = {
+      ...data, 
+      assets: [...URLS, ...uploadedFileURLs], 
+      team, 
+      stage, 
+      priority
+    }; 
 
-      toast.success(res.message);
+    const res = task?._id 
+      ? await updateTask({ ...newData, _id: task._id }).unwrap()
+      : await createTask(newData).unwrap(); 
+
+      toast.success(res.message); 
 
       setTimeout(() => {
-        setOpen(false);
+        setOpen(false); 
       }, 500);
-    } catch (err) {
-      console.log(err);
-      toast.error(err?.data?.message || err.error);
-    }
+   } catch (error) {
+    console.log(error); 
+    toast.error(error?.data?.message || error.error); 
+   }
   };
 
   const handleSelect = (e) => {

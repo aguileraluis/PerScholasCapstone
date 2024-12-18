@@ -24,14 +24,14 @@ const ChangePassword = ({ open, setOpen }) => {
     }
     try {
       const res = await changeUserPassword(data).unwrap();
-      toast.success("New User added successfully");
+      toast.success(res?.message);
 
       setTimeout(() => {
         setOpen(false);
       }, 1500);
     } catch (err) {
       console.log(err);
-      toast.error(err?.data?.message || err.error);
+      toast.error(err?.message || err.error);
     }
   };
 

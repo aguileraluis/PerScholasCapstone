@@ -418,6 +418,7 @@ const TaskDetail = () => {
                           key={index}
                           href={el}
                           target='_blank'
+                          rel="noreferror noreferrer"
                           className='text-blue-600 hover:underline'
                         >
                           {el}

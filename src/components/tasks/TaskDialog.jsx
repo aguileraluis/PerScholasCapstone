@@ -255,7 +255,7 @@ export default function TaskDialog({ task }) {
         task={task}
         key={new Date().getTime()}
       />
-      <AddSubTask open={open} setOpen={setOpen} />
+      <AddSubTask open={open} setOpen={setOpen} id={task?._id}/>
       <ConfirmatioDialog
         open={openDialog}
         setOpen={setOpenDialog}

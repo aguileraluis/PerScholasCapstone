@@ -36,7 +36,7 @@ const AddUser = ({ open, setOpen, userData }) => {
           ...data,
           password: data?.email,
         }).unwrap();
-        toast.success("New User added successfully");
+        toast.success(res?.data?.message);
       }
 
       setTimeout(() => {
