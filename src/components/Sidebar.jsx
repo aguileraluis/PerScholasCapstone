@@ -92,7 +92,7 @@ const Sidebar = () => {
         </p>
         <span className='text-2xl font-bold text-black dark:text-white'>
           TaskMe
-        </span>
+        </span>        
       </h1>
 
       <div className='flex-1 flex flex-col gap-y-5 py-8'>
@@ -100,13 +100,7 @@ const Sidebar = () => {
           <NavLink el={link} key={link.label} />
         ))}
       </div>
-
-      <div className=''>
-        <button className='w-full flex gap-2 p-2 items-center text-lg text-gray-800 dark:text-white'>
-          <MdSettings />
-          <span>Settings</span>
-        </button>
-      </div>
+    
     </div>
   );
 };
