@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 
+// eslint-disable-next-line react/display-name
 const Textbox = React.forwardRef(
   (
     { type, placeholder, label, className, labelClass, register, name, error },

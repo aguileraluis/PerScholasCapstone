@@ -121,7 +121,7 @@ const Table = ({ tasks }) => {
         </div>
       </td>
 
-      <td className='py-2 flex gap-2 md:gap-4 justify-end'>
+      {/* <td className='py-2 flex gap-2 md:gap-4 justify-end'>
         <Button
           className='text-blue-600 hover:text-blue-500 sm:px-0 text-sm md:text-base'
           label='Edit'
@@ -135,7 +135,7 @@ const Table = ({ tasks }) => {
           type='button'
           onClick={() => deleteClicks(task._id)}
         />
-      </td>
+      </td> */}
     </tr>
   );
 

@@ -5,7 +5,6 @@ import {
   MdDashboard,
   MdOutlineAddTask,
   MdOutlinePendingActions,
-  MdSettings,
   MdTaskAlt,
 } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,7 +74,7 @@ const Sidebar = () => {
         to={el.link}
         className={clsx(
           "w-fult lg:w-3/4 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 dark:text-gray-400 text-base hover:bg-[#2564ed2d]",
-          path === el.link.split("/")[0] ? "bg-blue-700 text-white" : ""
+          path === el.link.split("/")[0] ? "bg-purple-700 text-white" : ""
         )}
       >
         {el.icon}
@@ -87,7 +86,7 @@ const Sidebar = () => {
   return (
     <div className='w-full h-full flex flex-col gap-6 p-5'>
       <h1 className='flex gap-1 items-center'>
-        <p className='bg-blue-600 p-2 rounded-full'>
+        <p className='bg-purple-600 p-2 rounded-full'>
           <MdOutlineAddTask className='text-white text-2xl font-black' />
         </p>
         <span className='text-2xl font-bold text-black dark:text-white'>
